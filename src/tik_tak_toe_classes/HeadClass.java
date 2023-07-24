@@ -79,7 +79,6 @@ public class HeadClass {
 
 class Button_Handler extends Component implements MouseListener{
     JButton button = new JButton();
-    //private String[] templist = Arrays.copyOf(HeadClass.templist, 9);
     private static final String X = "X";
     private static final String O = "0";
 
