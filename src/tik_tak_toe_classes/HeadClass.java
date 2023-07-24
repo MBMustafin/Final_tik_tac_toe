@@ -8,8 +8,7 @@ import java.util.Arrays;
 
 public class HeadClass {
     protected static int counter = 9;
-    protected static String[] list = {"q", "w", "e", "r", "t", "y", "u", "i", "p"};
-    protected static final String[] helpList = {"q", "w", "e", "r", "t", "y", "u", "i", "p"};
+    protected static String[] templist = {"q", "w", "e", "r", "t", "y", "u", "i", "p"};
     protected static JButton a1 = new JButton();
     protected static JButton a2 = new JButton();
     protected static JButton a3 = new JButton();
@@ -80,97 +79,96 @@ public class HeadClass {
 
 class Button_Handler extends Component implements MouseListener{
     JButton button = new JButton();
-    private int counter = HeadClass.counter;
-    private String[] templist = HeadClass.helpList;
+    //private String[] templist = Arrays.copyOf(HeadClass.templist, 9);
     private static final String X = "X";
     private static final String O = "0";
 
     public Button_Handler(JButton a) {
         button = a;
     }
-    //public Button_Handler(JButton a, String[] templist, int counter) {
-    //    button = a;
-    //    this.templist = Arrays.copyOf(templist, templist.length);
-    //    this.counter = counter;
-    //}
 
     private void putToList(MouseEvent e) {
         if (e.getSource().equals(HeadClass.a1)) {
-            templist[0] = HeadClass.a1.getText();
+            HeadClass.templist[0] = HeadClass.a1.getText();
         }
         if (e.getSource().equals(HeadClass.a2)) {
-            templist[1] = HeadClass.a2.getText();
+            HeadClass.templist[1] = HeadClass.a2.getText();
         }
         if (e.getSource().equals(HeadClass.a3)) {
-            templist[2] = HeadClass.a3.getText();
+            HeadClass.templist[2] = HeadClass.a3.getText();
         }
 
 
         if (e.getSource().equals(HeadClass.a4)) {
-            templist[3] = HeadClass.a4.getText();
+            HeadClass.templist[3] = HeadClass.a4.getText();
         }
         if (e.getSource().equals(HeadClass.a5)) {
-            templist[4] = HeadClass.a5.getText();
+            HeadClass.templist[4] = HeadClass.a5.getText();
         }
         if (e.getSource().equals(HeadClass.a6)) {
-            templist[5] = HeadClass.a6.getText();
+            HeadClass.templist[5] = HeadClass.a6.getText();
         }
 
         if (e.getSource().equals(HeadClass.a7)) {
-            templist[6] = HeadClass.a7.getText();
+            HeadClass.templist[6] = HeadClass.a7.getText();
         }
         if (e.getSource().equals(HeadClass.a8)) {
-            templist[7] = HeadClass.a8.getText();
+            HeadClass.templist[7] = HeadClass.a8.getText();
         }
         if (e.getSource().equals(HeadClass.a9)) {
-            templist[8] = HeadClass.a9.getText();
+            HeadClass.templist[8] = HeadClass.a9.getText();
         }
     }
 
     private void checkConditions() {
-        boolean condition = templist[0] == templist[1] && templist[1] == templist[2]      ||                // 0 1 2
-                                templist[3] == templist[4] && templist[4] == templist[5]  ||                // 3 4 5
-                                templist[6] == templist[7] && templist[7] == templist[8]  ||                // 6 7 8
-                                templist[0] == templist[3] && templist[3] == templist[6]  ||
-                                templist[1] == templist[4] && templist[4] == templist[7]  ||
-                                templist[2] == templist[5] && templist[5] == templist[8]  ||
-                                templist[0] == templist[4] && templist[4] == templist[8]  ||
-                                templist[2] == templist[4] && templist[4] == templist[6];
+        boolean condition = HeadClass.templist[0] == HeadClass.templist[1] && HeadClass.templist[1] == HeadClass.templist[2]    ||  // 0 1 2
+                HeadClass.templist[3] == HeadClass.templist[4] && HeadClass.templist[4] == HeadClass.templist[5]  ||                // 3 4 5
+                HeadClass.templist[6] == HeadClass.templist[7] && HeadClass.templist[7] == HeadClass.templist[8]  ||                // 6 7 8
+                HeadClass.templist[0] == HeadClass.templist[3] && HeadClass.templist[3] == HeadClass.templist[6]  ||
+                HeadClass.templist[1] == HeadClass.templist[4] && HeadClass.templist[4] == HeadClass.templist[7]  ||
+                HeadClass.templist[2] == HeadClass.templist[5] && HeadClass.templist[5] == HeadClass.templist[8]  ||
+                HeadClass.templist[0] == HeadClass.templist[4] && HeadClass.templist[4] == HeadClass.templist[8]  ||
+                HeadClass.templist[2] == HeadClass.templist[4] && HeadClass.templist[4] == HeadClass.templist[6];
         if (condition) {
             JOptionPane.showConfirmDialog(this, "Новая игра?", "GameOver!", JOptionPane.INFORMATION_MESSAGE);
-            templist = HeadClass.helpList;
-            counter = HeadClass.counter;
+            reset();
         } else {
-            if (counter == 1) {
+            if (HeadClass.counter == 1) {
                 JOptionPane.showConfirmDialog(this, "Ничья\nНовая игра?", "GameOver!", JOptionPane.INFORMATION_MESSAGE);
-                templist = HeadClass.helpList;
-                counter = HeadClass.counter;
+                reset();
             }
         }
+    }
+
+    private void reset() {
+        HeadClass.templist = Arrays.copyOf(new String[]{"q", "w", "e", "r", "t", "y", "u", "i", "p"}, 9);
+        HeadClass.counter = 9;
+        System.out.println(Arrays.toString(HeadClass.templist));
+        System.out.println(HeadClass.counter);
     }
 
     @Override
     public void mouseClicked(MouseEvent e) {
         if(button != HeadClass.reset){
-            if (counter % 2 != 0 && counter != 1) {
+            if (HeadClass.counter % 2 != 0 && HeadClass.counter != 1) {
                 button.setText(X);
                 putToList(e);
                 checkConditions();
-                System.out.println(Arrays.toString(templist));
+                System.out.println(Arrays.toString(HeadClass.templist));
             } else
             {
-                if (counter % 2 == 0) {
+                if (HeadClass.counter % 2 == 0) {
                     button.setText(O);
                     putToList(e);
                     checkConditions();
-                    System.out.println(Arrays.toString(templist));
+                    System.out.println(Arrays.toString(HeadClass.templist));
                 }
-                if (counter == 1) {
+                if (HeadClass.counter == 1) {
                     checkConditions();
                     System.out.println("Игра закончена");
                 }
             }
-            counter--;
+            HeadClass.counter--;
         }
         else {
             HeadClass.a1.setText("");
@@ -182,8 +180,7 @@ class Button_Handler extends Component implements MouseListener{
             HeadClass.a7.setText("");
             HeadClass.a8.setText("");
             HeadClass.a9.setText("");
-            templist = HeadClass.helpList;
-            counter = HeadClass.counter;
+            reset();
         }
 
     }
